@@ -1,22 +1,15 @@
-import React, {Component} from "react";
+import React from "react";
 import './app.css';
-import ErrorBoundry from "../error-boundry";
-import {BookstoreServiceProvider} from "../bookstore-service-context";
-import BookstoreService from "../../services/bookstore-service";
+import {Route, Switch} from "react-router-dom";
+import {CardPage, HomePage} from "../pages";
 
-export default class App extends Component {
-    state = {
-        books: new BookstoreService()
-    };
+const App = () => {
+    return (
+        <Switch>
+            <Route path={'/'} exact component={HomePage} />
+            <Route path={'/books'} exact component={CardPage} />
+        </Switch>
+    );
+};
 
-    render() {
-        const books = this.state.books;
-        return (
-            <ErrorBoundry>
-                <BookstoreServiceProvider value={books}>
-                    <div>App</div>
-                </BookstoreServiceProvider>
-            </ErrorBoundry>
-        );
-    }
-}
+export default App;
