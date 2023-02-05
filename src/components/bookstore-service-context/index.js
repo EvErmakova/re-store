@@ -1,3 +1,3 @@
-import App from "./app";
+import {BookstoreServiceProvider, BookstoreServiceConsumer} from "./bookstore-service-context";
 
-export default App;
+export {BookstoreServiceProvider, BookstoreServiceConsumer};

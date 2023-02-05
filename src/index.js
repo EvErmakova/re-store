@@ -1,2 +1,5 @@
+import React from "react";
+import * as ReactDOM from "react-dom";
+import App from "./components/app";
 
-console.log('hello world');
+ReactDOM.render(<App />, document.getElementById('root'));
