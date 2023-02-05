@@ -19,7 +19,7 @@ export class BookList extends Component {
     render() {
         const {books} = this.props;
         return (
-            <ul>
+            <ul className="book-list">
                 {books.map((book, index) => {
                     return (
                         <li key={`book${index}`}><BookListItem book={book} /></li>
