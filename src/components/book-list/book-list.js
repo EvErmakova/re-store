@@ -1,23 +1,35 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import './book-list.css';
-import {booksLoaded} from "../../actions";
+import {booksError, booksLoaded, booksRequested} from "../../actions";
 import {compose} from "../../utils";
 import WithBookstoreService from "../hoc/with-bookstore-service";
 import BookListItem from "../book-list-item";
 import Spinner from "../spinner";
+import ErrorIndicator from "../error-indicator";
 
 
 export class BookList extends Component {
 
     componentDidMount() {
-        const {bookstoreService, booksLoaded} = this.props;
+        const {
+            bookstoreService,
+            booksLoaded,
+            booksRequested,
+            booksError
+        } = this.props;
+        booksRequested();
         const data = bookstoreService.getBooks()
-            .then((data) => booksLoaded(data));
+            .then((data) => booksLoaded(data))
+            .catch((err) => booksError(err));
     }
 
     render() {
-        const {books, loading} = this.props;
+        const {books, loading, error} = this.props;
+
+        if (error) {
+            return <ErrorIndicator />;
+        }
 
         if (loading) {
             return <Spinner />;
@@ -35,11 +47,17 @@ export class BookList extends Component {
     }
 };
 
-const mapStateToProps = ({books, loading}) => {
-    return {books, loading};
+const mapStateToProps = ({books, loading, error}) => {
+    return {books, loading, error};
+};
+
+const mapDispatchToProps = {
+    booksLoaded,
+    booksRequested,
+    booksError
 };
 
 export default compose(
     WithBookstoreService(),
-    connect(mapStateToProps, {booksLoaded})
+    connect(mapStateToProps, mapDispatchToProps)
 )(BookList);

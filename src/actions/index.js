@@ -1,4 +1,10 @@
-import {BOOKS_LOADED} from "./action-types";
+import {BOOKS_LOADED, BOOKS_REQUESTED, BOOKS_ERROR} from "./action-types";
+
+const booksRequested = () => {
+    return {
+        type: BOOKS_REQUESTED,
+    }
+};
 
 const booksLoaded = (newBooks) => {
     return {
@@ -7,4 +13,11 @@ const booksLoaded = (newBooks) => {
     }
 };
 
-export {booksLoaded};
+const booksError = (error) => {
+    return {
+        type: BOOKS_ERROR,
+        payload: error
+    }
+}
+
+export {booksLoaded, booksRequested, booksError, BOOKS_LOADED, BOOKS_REQUESTED, BOOKS_ERROR};
