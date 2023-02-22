@@ -1,23 +1,30 @@
-import {BOOKS_LOADED, BOOKS_REQUESTED, BOOKS_ERROR} from "./action-types";
+import {FETCH_BOOKS_SUCCESS, FETCH_BOOKS_REQUESTED, FETCH_BOOKS_FAILURE} from "./action-types";
 
 const booksRequested = () => {
     return {
-        type: BOOKS_REQUESTED,
+        type: FETCH_BOOKS_REQUESTED,
     }
 };
 
 const booksLoaded = (newBooks) => {
     return {
-        type: BOOKS_LOADED,
+        type: FETCH_BOOKS_SUCCESS,
         payload: newBooks
     }
 };
 
 const booksError = (error) => {
     return {
-        type: BOOKS_ERROR,
+        type: FETCH_BOOKS_FAILURE,
         payload: error
     }
 }
 
-export {booksLoaded, booksRequested, booksError, BOOKS_LOADED, BOOKS_REQUESTED, BOOKS_ERROR};
+const fetchBooks = (bookstoreService, dispatch) => () => {
+    dispatch(booksRequested());
+    bookstoreService.getBooks()
+        .then((data) => dispatch(booksLoaded(data)))
+        .catch((err) => dispatch(booksError(err)));
+}
+
+export {fetchBooks, FETCH_BOOKS_SUCCESS, FETCH_BOOKS_REQUESTED, FETCH_BOOKS_FAILURE};
