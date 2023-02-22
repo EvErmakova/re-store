@@ -7,7 +7,7 @@ import ShopHeader from "../shop-header";
 const App = () => {
     return (
         <Fragment>
-            <ShopHeader numItems={2} total={20} />
+            <ShopHeader />
             <main role="main" className="container">
                 <Switch>
                     <Route path={'/'} exact component={HomePage} />
