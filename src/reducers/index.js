@@ -3,13 +3,29 @@ import {FETCH_BOOKS_FAILURE, FETCH_BOOKS_SUCCESS, FETCH_BOOKS_REQUESTED} from ".
 const initialState = {
     books: [],
     loading: true,
-    error: null
+    error: null,
+    cartItems: [
+        {
+            id: 1,
+            name: 'Book 1',
+            count: 1,
+            total: 50
+        },
+        {
+            id: 2,
+            name: 'Book 2',
+            count: 2,
+            total: 80
+        }
+    ],
+    orderTotal: 130
 };
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_BOOKS_REQUESTED:
             return {
+                ...state,
                 books: [],
                 loading: true,
                 error: null
@@ -17,6 +33,7 @@ const reducer = (state = initialState, action) => {
 
         case FETCH_BOOKS_SUCCESS:
             return {
+                ...state,
                 books: action.payload,
                 loading: false,
                 error: null
@@ -24,6 +41,7 @@ const reducer = (state = initialState, action) => {
 
         case FETCH_BOOKS_FAILURE:
             return {
+                ...state,
                 books: [],
                 loading: false,
                 error: action.payload
